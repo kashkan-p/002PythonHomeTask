@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup
 class RabotaByParser:
     """RabotaByParser provides parsing of particular data from raw html code of rabota.by pages"""
 
+    URL = 'https://rabota.by/search/vacancy'
+    PYTHON_QUERY_PARAMS = {"area": "1002", "text": "python"}
+    HEADER = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+                            'Chrome/39.0.2171.95 Safari/537.36'}
     FIRST_PAGE_NUMBER = 0
 
     @staticmethod
@@ -70,10 +74,8 @@ class RabotaByParser:
                 f"{str2} average occurrence": str2_counted / len(data_list),
                 f"{str3} average occurrence": str3_counted / len(data_list)}
 
-
     # @staticmethod
     # def get_failed_search_message(raw_html):
     #     soup = BeautifulSoup(raw_html, "lxml")
     #     msg = soup.find("div", id="HH-React-Root").find("h1", class_="bloko-header-1").text
     #     return msg
-

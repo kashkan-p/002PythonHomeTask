@@ -1,8 +1,6 @@
+def test_rabota_by_connection(rabota_by_response):
+    assert rabota_by_response.status_code == 200
 
 
-def test_response(get_response_code):
-    assert get_response_code == 200
-
-
-def test_search(search_result):
-    assert "По запросу «shotgun» ничего не найдено" in search_result
+def test_no_results_for_shotgun(rabota_by_response):
+    assert "shotgun" in rabota_by_response.text
