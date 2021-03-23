@@ -1,4 +1,3 @@
-from fixtures.rabota_by_fixtures import *
 
 
 def test_response(get_response_code):
