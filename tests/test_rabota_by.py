@@ -3,4 +3,4 @@ def test_rabota_by_connection(rabota_by_response):
 
 
 def test_no_results_for_shotgun(rabota_by_response):
-    assert "shotgun" in rabota_by_response.text
+    assert "shotgun" not in rabota_by_response.text
