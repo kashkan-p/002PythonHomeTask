@@ -6,6 +6,7 @@ class RabotaByParser:
 
     URL = 'https://rabota.by/search/vacancy'
     PYTHON_QUERY_PARAMS = {"area": "1002", "text": "python"}
+    SHOTGUN_QUERY_PARAMS = {"area": "1002", "text": "shotgun"}
     HEADER = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) '
                             'Chrome/39.0.2171.95 Safari/537.36'}
     FIRST_PAGE_NUMBER = 0

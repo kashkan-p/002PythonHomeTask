@@ -14,8 +14,13 @@ def parser():
 
 
 @pytest.fixture(scope='module')
-def rabota_by_response(client, parser):
+def rabota_by_python_response(client, parser):
     return client.get(parser.URL, params=parser.PYTHON_QUERY_PARAMS, header=parser.HEADER)
+
+
+@pytest.fixture
+def rabota_by_shotgun_response(client, parser):
+    return client.get(parser.URL, params=parser.SHOTGUN_QUERY_PARAMS, header=parser.HEADER)
 
 
 @pytest.fixture(scope='module')

@@ -1,9 +1,10 @@
-def test_rabota_by_connection(rabota_by_response):
-    assert rabota_by_response.status_code == 200, "The server does not respond"
+def test_rabota_by_connection(rabota_by_python_response):
+    assert rabota_by_python_response.status_code == 200, "The server does not respond"
 
 
-def test_no_results_for_shotgun(rabota_by_response):
-    assert "shotgun" not in rabota_by_response.text, "Shotgun should not be in search results"
+def test_no_results_for_shotgun(rabota_by_shotgun_response):
+    assert "По запросу «shotgun» ничего не найдено" in rabota_by_shotgun_response.text, "Shotgun should not be in " \
+                                                                                        "search results "
 
 
 def test_python_occurrence(rabota_by_response, avg_word_occurrence):
