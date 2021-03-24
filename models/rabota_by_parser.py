@@ -13,14 +13,18 @@ class RabotaByParser:
 
     @staticmethod
     def get_last_page_number(raw_html):
-        """This method takes html code of a search page and returns the range of pages of a search query"""
+        """This method takes html code of a search page and returns the range of pages of a search query
+        :arg raw_html (html code of a page from http response)
+        :return number of the last page in the query"""
         soup = BeautifulSoup(raw_html, "lxml")
         last_page = soup.find_all("span", class_="pager-item-not-in-short-range")[-1].find("a").text
         return int(last_page)
 
     @staticmethod
     def parse_vacancy_hrefs(raw_html):
-        """This method takes html code of a search page and returns list of urls of every vacancy on a page"""
+        """This method takes html code of a search page and returns list of urls of every vacancy on a page
+        :arg raw_html (html code of a page from http response)
+        :return list of all vacancies links"""
         soup = BeautifulSoup(raw_html, "lxml")
         vacancies = soup.find_all("div", class_="vacancy-serp-item__row vacancy-serp-item__row_header")
         vacancy_list = []
@@ -31,14 +35,18 @@ class RabotaByParser:
     @staticmethod
     def parse_vacancy_description(raw_html):
         """This method takes html code of a vacancy page and returns string representation of vacancy title and
-        description """
+        description
+        :arg raw_html (html code of a page from http response)
+        :return description of a vacancy in string representation"""
         soup = BeautifulSoup(raw_html, "lxml")
         vacancy_desc = soup.find("div", class_="vacancy-section").prettify()
         return vacancy_desc
 
     @staticmethod
     def get_flat_list(list_of_lists):
-        """This method merges list of sublists into a flat list"""
+        """This method merges list of sublists into a flat list
+        :arg list_of_lists (list consisting of one level nested lists
+        :return a flat list of all items in nrsted lists"""
         flat_list = []
         for sublist in list_of_lists:
             for item in sublist:
@@ -47,7 +55,10 @@ class RabotaByParser:
 
     @staticmethod
     def count_word_occurrences(data_list, str1, str2, str3):
-        """This method counts occurrences of given word in every vacancy's description"""
+        """This method counts occurrences of given word in every vacancy's description
+        :arg data_list (a list containing all vacancies descriptions
+        :arg str1, str2, str3 (substring to find in descriptions)
+        :return a dictionary containing vacancy number and substring occurrences"""
         counted = {}
         vacancy_num = 1
         for item in data_list:
@@ -60,7 +71,10 @@ class RabotaByParser:
 
     @staticmethod
     def count_average_word_occurrence(data_list, str1, str2, str3):
-        """This method counts average occurrences count of given word in a whole search query"""
+        """This method counts average occurrences count of given word in a whole search query
+        :arg data_list (a list containing all vacancies descriptions
+        :arg str1, str2, str3 (substring to count in descriptions)
+        :return a dictionary containing average number of substring occurrences"""
         str1_counted = 0
         str2_counted = 0
         str3_counted = 0
