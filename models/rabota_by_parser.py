@@ -74,9 +74,3 @@ class RabotaByParser:
         return {f"{str1} average occurrence": str1_counted / len(data_list),
                 f"{str2} average occurrence": str2_counted / len(data_list),
                 f"{str3} average occurrence": str3_counted / len(data_list)}
-
-    # @staticmethod
-    # def get_failed_search_message(raw_html):
-    #     soup = BeautifulSoup(raw_html, "lxml")
-    #     msg = soup.find("div", id="HH-React-Root").find("h1", class_="bloko-header-1").text
-    #     return msg

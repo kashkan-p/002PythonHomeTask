@@ -24,16 +24,24 @@ def rabota_by_shotgun_response(client, parser):
 
 
 @pytest.fixture(scope='module')
-def avg_word_occurrence(client, parser, rabota_by_response):
-    last_page = parser.get_last_page_number(rabota_by_response.text)
+def last_page(client, parser, rabota_by_python_response):
+    return parser.get_last_page_number(rabota_by_python_response.text)
 
+
+@pytest.fixture(scope='module')
+def all_vacancies_list(client, parser, rabota_by_python_response, last_page):
     vacancy_urls = []
     for number in range(parser.FIRST_PAGE_NUMBER, last_page):
         parser.PYTHON_QUERY_PARAMS["page"] = number
         page = client.get(parser.URL, params=parser.PYTHON_QUERY_PARAMS, header=parser.HEADER).text
         vacancy_urls.append(parser.parse_vacancy_hrefs(page))
+    return vacancy_urls
 
-    all_vacancies_urls = parser.get_flat_list(vacancy_urls)
+
+@pytest.fixture(scope='module')
+def avg_word_occurrence(client, parser, all_vacancies_list):
+
+    all_vacancies_urls = parser.get_flat_list(all_vacancies_list)
 
     vacancy_description_raw = []
     for vacancy_url in all_vacancies_urls:
