@@ -15,7 +15,8 @@ def test_no_results_for_shotgun(rabota_by_shotgun_response):
                                                                                         "search results "
 
 
-def test_urls_list_length_equal_to_number_of_pages(last_page, all_vacancies_list):
+def test_urls_list_length_equal_to_number_of_pages(parser, all_vacancies_list, rabota_by_python_response):
+    last_page = parser.get_last_page_number(rabota_by_python_response.text)
     assert len(all_vacancies_list) == last_page, "Number of parsed pages is not equal to actual pages number"
 
 

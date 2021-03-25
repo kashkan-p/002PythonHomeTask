@@ -37,26 +37,25 @@ def rabota_by_shotgun_response(client, parser):
     return client.get(parser.URL, params=parser.SHOTGUN_QUERY_PARAMS, header=parser.HEADER)
 
 
-@pytest.fixture(scope='module')
-def last_page(client, parser, rabota_by_python_response):
-    """This fixture finds the number of the last page in a search query
-    :arg client (instance of HttpClient)
-    :arg parser (instance of RabotaByParser)
-    :arg rabota_by_python_response (http response object
-    :return int number of the last page"""
-    return parser.get_last_page_number(rabota_by_python_response.text)
+# @pytest.fixture(scope='module')
+# def last_page(client, parser, rabota_by_python_response):
+#     """This fixture finds the number of the last page in a search query
+#     :arg client (instance of HttpClient)
+#     :arg parser (instance of RabotaByParser)
+#     :arg rabota_by_python_response (http response object
+#     :return int number of the last page"""
+#     return parser.get_last_page_number(rabota_by_python_response.text)
 
 
 @pytest.fixture(scope='module')
-def all_vacancies_list(client, parser, rabota_by_python_response, last_page):
+def all_vacancies_list(client, parser, rabota_by_python_response):
     """This fixture gets oll vacancies links from the first to the las page
     :arg client (instance of HttpClient)
     :arg parser (instance of RabotaByParser)
     :arg rabota_by_python_response (http response object)
-    :arg last_page (number of the last page)
     :return list of all vacancies"""
     vacancy_urls = []
-    for number in range(parser.FIRST_PAGE_NUMBER, last_page):
+    for number in range(parser.FIRST_PAGE_NUMBER, parser.get_last_page_number(rabota_by_python_response.text)):
         parser.PYTHON_QUERY_PARAMS["page"] = number
         page = client.get(parser.URL, params=parser.PYTHON_QUERY_PARAMS, header=parser.HEADER).text
         vacancy_urls.append(parser.parse_vacancy_hrefs(page))
