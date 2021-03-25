@@ -1,3 +1,4 @@
+"""This module describes RabotaByParser class which used for parsing rabota.by pages"""
 from bs4 import BeautifulSoup
 
 
@@ -70,7 +71,15 @@ class RabotaByParser:
         return counted
 
     @staticmethod
-    def count_average_word_occurrence(data_list, str1, str2, str3):
+    def count_average_word_occurrence(data_list, word):
+        word_counted = 0
+        for item in data_list:
+            word_count = item.lower().count(word.lower())
+            word_counted += word_count
+        return {f"{word} average": word_counted}
+
+    @staticmethod
+    def count_average_word_occurrences(data_list, str1, str2, str3):
         """This method counts average occurrences count of given word in a whole search query
         :arg data_list (a list containing all vacancies descriptions
         :arg str1, str2, str3 (substring to count in descriptions)

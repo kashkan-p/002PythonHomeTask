@@ -1,3 +1,5 @@
+"""This module implements fixtures for testing rabota.by pages"""
+
 import pytest
 from clients.http_client import HttpClient
 from models.rabota_by_parser import RabotaByParser
@@ -62,24 +64,57 @@ def all_vacancies_list(client, parser, rabota_by_python_response, last_page):
 
 
 @pytest.fixture(scope='module')
-def avg_word_occurrence(client, parser, all_vacancies_list):
-    """This fixture counts average occurrences of words in vacancy tescriptions
+def flat_list(parser, all_vacancies_list):
+    """This fixture transforms nested list to a flat list
+    :arg parser (instance of RabotaByParser)
+    :arg all_vacancies_list (list of all vacancies)
+    :return a flat list of all vacancies"""
+    return parser.get_flat_list(all_vacancies_list)
+
+
+@pytest.fixture(scope='module')
+def parsed_descriptions(client, parser, flat_list):
+    """This fixture gets all vacancies descriptions in a string representation
     :arg client (instance of HttpClient)
     :arg parser (instance of RabotaByParser)
-    :arg all_vacancies_list (ist of all vacancies)
-    :return dict with a number of average occurrences of words"""
-
-    all_vacancies_urls = parser.get_flat_list(all_vacancies_list)
-
+    :arg flat_list (list of all vacancies)
+    :return a flat list of all vacancies descriptions"""
     vacancy_description_raw = []
-    for vacancy_url in all_vacancies_urls:
+    for vacancy_url in flat_list:
         vacancy_description_raw.append(client.get(vacancy_url, header=parser.HEADER).text)
 
     vacancies_parsed = []
     for vacancy in vacancy_description_raw:
         parsed = parser.parse_vacancy_description(vacancy)
         vacancies_parsed.append(parsed)
+    return vacancies_parsed
 
-    avg_occurrence = parser.count_average_word_occurrence(vacancies_parsed, "python", "linux", "flask")
 
-    return avg_occurrence
+@pytest.fixture(scope='module')
+def avg_python_occurrence(parser, parsed_descriptions):
+    """This fixture counts average occurrences of words in vacancy descriptions
+    :arg parser (instance of RabotaByParser)
+    :arg parsed_descriptions (list of all vacancies descriptions)
+    :return dict with a number of average occurrences of words"""
+
+    return parser.count_average_word_occurrence(parsed_descriptions, "python")
+
+
+@pytest.fixture(scope='module')
+def avg_flask_occurrence(parser, parsed_descriptions):
+    """This fixture counts average occurrences of words in vacancy descriptions
+    :arg parser (instance of RabotaByParser)
+    :arg parsed_descriptions (list of all vacancies descriptions)
+    :return dict with a number of average occurrences of words"""
+
+    return parser.count_average_word_occurrence(parsed_descriptions, "flask")
+
+
+@pytest.fixture(scope='module')
+def avg_linux_occurrence(parser, parsed_descriptions):
+    """This fixture counts average occurrences of words in vacancy descriptions
+    :arg parser (instance of RabotaByParser)
+    :arg parsed_descriptions (list of all vacancies descriptions)
+    :return dict with a number of average occurrences of words"""
+
+    return parser.count_average_word_occurrence(parsed_descriptions, "linux")
