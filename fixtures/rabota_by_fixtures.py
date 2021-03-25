@@ -37,16 +37,6 @@ def rabota_by_shotgun_response(client, parser):
     return client.get(parser.URL, params=parser.SHOTGUN_QUERY_PARAMS, header=parser.HEADER)
 
 
-# @pytest.fixture(scope='module')
-# def last_page(client, parser, rabota_by_python_response):
-#     """This fixture finds the number of the last page in a search query
-#     :arg client (instance of HttpClient)
-#     :arg parser (instance of RabotaByParser)
-#     :arg rabota_by_python_response (http response object
-#     :return int number of the last page"""
-#     return parser.get_last_page_number(rabota_by_python_response.text)
-
-
 @pytest.fixture(scope='module')
 def all_vacancies_list(client, parser, rabota_by_python_response):
     """This fixture gets oll vacancies links from the first to the las page
