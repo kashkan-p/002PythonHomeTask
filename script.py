@@ -42,4 +42,4 @@ if __name__ == '__main__':
     # Counting occurrences of the given words in each vacancy description
     counted = parser.count_word_occurrences(vacancies_parsed, "python", "linux", "flask")
     # Counting average occurrences of the given words
-    avg_occurrence = parser.count_average_word_occurrences(vacancies_parsed, "python", "linux", "flask")
+    avg_python_occurrence = parser.count_average_word_occurrence(vacancies_parsed, "python")

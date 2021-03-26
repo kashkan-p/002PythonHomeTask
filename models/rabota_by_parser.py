@@ -78,22 +78,3 @@ class RabotaByParser:
             word_counted += word_count
         return {f"{word} average": word_counted}
 
-    @staticmethod
-    def count_average_word_occurrences(data_list, str1, str2, str3):
-        """This method counts average occurrences count of given word in a whole search query
-        :arg data_list (a list containing all vacancies descriptions
-        :arg str1, str2, str3 (substring to count in descriptions)
-        :return a dictionary containing average number of substring occurrences"""
-        str1_counted = 0
-        str2_counted = 0
-        str3_counted = 0
-        for item in data_list:
-            str1_count = item.lower().count(str1.lower())
-            str2_count = item.lower().count(str2.lower())
-            str3_count = item.lower().count(str3.lower())
-            str1_counted += str1_count
-            str2_counted += str2_count
-            str3_counted += str3_count
-        return {f"{str1} average occurrence": str1_counted / len(data_list),
-                f"{str2} average occurrence": str2_counted / len(data_list),
-                f"{str3} average occurrence": str3_counted / len(data_list)}

@@ -2,7 +2,8 @@
 
 
 def test_rabota_by_connection(rabota_by_python_response):
-    assert rabota_by_python_response.status_code == 200, "The server does not respond"
+    assert rabota_by_python_response.status_code == 200, "The server response status code is not 200. " \
+                                                         "The page is not available."
 
 
 def test_results_for_python(rabota_by_python_response):
